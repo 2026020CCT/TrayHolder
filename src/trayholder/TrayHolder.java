@@ -23,26 +23,26 @@ public class TrayHolder {
 
     static String DateExp(String datein) {
         Scanner scanner = new Scanner(System.in);
+        int gap;
         while (true) {
             System.out.print("Enter date of expire(YYYY-MM-DD): ");
             String dateexp = scanner.nextLine();
             String[] myArray = dateexp.split("-");
             String[] myArray1 = datein.split("-");
+            
             int inDay = Integer.parseInt(myArray[2]);
             int expDay = Integer.parseInt(myArray1[2]);
             int inM = Integer.parseInt(myArray1[1]);
             int expM = Integer.parseInt(myArray[1]);
-            System.out.println(inDay + " ->" + expDay);
-            if (expM - inM <= 1) {
-                if (inDay > expDay) {
-                    if (expDay + 30 - inDay <= 14) {
-                        break;
-                    }
-                } else if (expDay - inDay <= 14) {
-                    break;
-
-                }
+            int inY = Integer.parseInt(myArray1[0]);
+            int expY = Integer.parseInt(myArray[0]);            
+            
+            gap = (expY- inY)*365+(expM - inM)*30+expDay-inDay;
+            
+            if(gap <=14){
+                break;
             }
+            
             System.out.println("Expired date it out of range, check it again please.");
         }
         return "";
