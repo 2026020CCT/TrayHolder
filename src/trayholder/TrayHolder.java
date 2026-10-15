@@ -4,6 +4,62 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class TrayHolder {
+    static void queue(){
+        Scanner scanner = new Scanner(System.in);
+        Quee q = new Quee();
+
+        while (true) {
+            System.out.println("\nQueue Operations:");
+            System.out.println("1. Enqueue");
+            System.out.println("2. Dequeue");
+            System.out.println("3. Peek");
+            System.out.println("4. Display");
+            System.out.println("5. Size");
+            System.out.println("6. Exit");
+
+            System.out.print("Choose an operation (1-6): ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter name of the item: ");
+                    String name = scanner.nextLine();
+
+                    System.out.print("Enter weight of the item: ");
+                    int weight = Kbint();
+
+                    LocalDate myObj = LocalDate.now();
+                    String datein = myObj.getYear() + "-" + myObj.getMonthValue() + "-" + myObj.getDayOfMonth();
+                    System.out.println("Entered date: " + datein);
+
+                    String dateexp = DateExp(datein);
+
+                    Tray item = new Tray(name, weight, datein, dateexp);
+
+                    q.enqueue(item);
+                    break;
+                case 2:
+                    q.dequeue();
+                    break;
+                case 3:
+                    q.peek();
+                    break;
+                case 4:
+                    q.display();
+                    break;
+                case 5:
+                    q.size();
+                    break;
+                case 6:
+                    System.out.println("Exiting the program...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        }
+    }
 
     static int Kbint() {
         Scanner scanner = new Scanner(System.in);
@@ -186,58 +242,6 @@ public class TrayHolder {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the size of the queue: ");
 //        int size = scanner.nextInt();
-        Quee q = new Quee();
-
-        while (true) {
-            System.out.println("\nQueue Operations:");
-            System.out.println("1. Enqueue");
-            System.out.println("2. Dequeue");
-            System.out.println("3. Peek");
-            System.out.println("4. Display");
-            System.out.println("5. Size");
-            System.out.println("6. Exit");
-
-            System.out.print("Choose an operation (1-6): ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter name of the item: ");
-                    String name = scanner.nextLine();
-
-                    System.out.print("Enter weight of the item: ");
-                    int weight = Kbint();
-
-                    LocalDate myObj = LocalDate.now();
-                    String datein = myObj.getYear() + "-" + myObj.getMonthValue() + "-" + myObj.getDayOfMonth();
-                    System.out.println("Entered date: " + datein);
-
-                    String dateexp = DateExp(datein);
-
-                    Tray item = new Tray(name, weight, datein, dateexp);
-
-                    q.enqueue(item);
-                    break;
-                case 2:
-                    q.dequeue();
-                    break;
-                case 3:
-                    q.peek();
-                    break;
-                case 4:
-                    q.display();
-                    break;
-                case 5:
-                    q.size();
-                    break;
-                case 6:
-                    System.out.println("Exiting the program...");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid choice! Please try again.");
-            }
-        }
+        
     }
 }
