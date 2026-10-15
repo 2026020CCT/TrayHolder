@@ -61,6 +61,9 @@ public class TrayHolder {
         }
     }
 
+    static void stack(){
+        
+    }
     static int Kbint() {
         Scanner scanner = new Scanner(System.in);
         int number = 0;
@@ -103,7 +106,6 @@ public class TrayHolder {
         }
         return "";
     }
-
     public static class Tray {
 
         private String Name, Date, DateExp;
@@ -116,7 +118,54 @@ public class TrayHolder {
             this.Weight = weight;
         }
     }
-
+    public static class Stack{
+        private Tray[] stack;
+        private int top, size;
+        
+        public Stack(){
+            this.size = 10;
+            this.stack = new Tray[10];
+            this.top = -1;
+        }
+        
+        public boolean isEmpty(){
+            return top == -1;
+        }
+        
+        public boolean isFull(){
+            return top == size;
+        }
+        
+        public void enStack(Tray newTray){
+            if (isFull()) {
+                System.out.println("Tray holder is full!");
+            } else{
+                top++;
+                stack[top] = newTray;
+            }
+        }
+        
+        public void deStack(){
+            if (isEmpty()) {
+                System.out.println("Tray holder is empty!");
+            } else{
+                top--;
+            }
+        }
+        
+        public void peek() {
+            if (isEmpty()) {
+                System.out.println("Tray holder is empty!");
+            } else {
+                System.out.println("Tray " + top + ":");
+                System.out.println("    Name of item: " + stack[top].Name + " ");
+                System.out.println("    Weight of item: " + stack[top].Weight + "g ");
+                System.out.println("    Date of instert into holder: " + stack[top].Date + " ");
+                System.out.println("    Date of item expire: " + stack[top].DateExp + " ");
+            }
+        }
+        
+    }
     public static class Quee {
 
         private Tray[] quee;
