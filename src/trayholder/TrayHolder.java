@@ -152,7 +152,6 @@ public class TrayHolder {
         sc.close();
         return number;
     }
-    
 
     static String DateExp(String datein) {
         Scanner scanner = new Scanner(System.in);
@@ -161,25 +160,29 @@ public class TrayHolder {
         while (true) {
             System.out.print("Enter date of expire(YYYY-MM-DD): ");
             dateexp = scanner.nextLine();
-            String[] myArray = dateexp.split("-");
-            String[] myArray1 = datein.split("-");
+            LocalDate enteredDate = LocalDate.parse(datein);
+            LocalDate expiryDate = LocalDate.parse(dateexp);
 
-            int inDay = Integer.parseInt(myArray[2]);
-            int expDay = Integer.parseInt(myArray1[2]);
-            int inM = Integer.parseInt(myArray1[1]);
-            int expM = Integer.parseInt(myArray[1]);
-            int inY = Integer.parseInt(myArray1[0]);
-            int expY = Integer.parseInt(myArray[0]);
+            long days = java.time.temporal.ChronoUnit.DAYS.between(enteredDate, expiryDate);
+//            String[] myArray = dateexp.split("-");
+//            String[] myArray1 = datein.split("-");
+//            int inDay = Integer.parseInt(myArray[2]);
+//            int expDay = Integer.parseInt(myArray1[2]);
+//            int inM = Integer.parseInt(myArray1[1]);
+//            int expM = Integer.parseInt(myArray[1]);
+//            int inY = Integer.parseInt(myArray1[0]);
+//            int expY = Integer.parseInt(myArray[0]);
+//
+//            gap = (expY - inY) * 365 + (expM - inM) * 30 + expDay - inDay;
 
-            gap = (expY - inY) * 365 + (expM - inM) * 30 + expDay - inDay;
-
-            if (gap <= 14 && gap > 0) {
-                break;
+//            if (gap <= 14 && gap > 0) {
+//                break;
+//            }
+            if (days >= 1 && days <= 14) {
+                return dateexp;
             }
-
             System.out.println("Expiry must be within 14 days, check it and try again please.");
         }
-        return dateexp;
     }
 
     public static class Tray {
