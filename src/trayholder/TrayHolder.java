@@ -1,6 +1,7 @@
 package trayholder;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TrayHolder {
@@ -77,6 +78,7 @@ public class TrayHolder {
 
             System.out.println("Enter your choice");
             int choice = sc.nextInt();
+            sc.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
@@ -116,34 +118,49 @@ public class TrayHolder {
             }
 
         }
-    
 
-        
-
-    
+    }
 
     static int Kbint() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         int number = 0;
+        boolean valid = false;
 
-        try {
+        while (!valid) {
+            try {
+                System.out.print("Enter a positive number: ");
+                number = sc.nextInt();          // tries to read an integer
 
-            number = scanner.nextInt();
+                if (number <= 0) {
+                    throw new IllegalArgumentException("Number must be positive (greater than 0)!");
+                }
 
-        } catch (Exception e) {
-            System.out.println("You shoud put a weight of product as a number !!!");
-            number = Kbint();
+                // If we reach here → input is valid
+                valid = true;
+                System.out.println("You entered a valid positive number: " + number);
+
+            } catch (InputMismatchException e) {
+                // User typed a string / letters / symbols
+                System.out.println("Error: Please enter a number, not text!");
+                sc.nextLine();  // clear the invalid input from the buffer
+            } catch (IllegalArgumentException e) {
+                // User entered 0 or a negative number
+                System.out.println("Error: " + e.getMessage());
+            }
         }
 
+        sc.close();
         return number;
     }
+    
 
     static String DateExp(String datein) {
         Scanner scanner = new Scanner(System.in);
         int gap;
+        String dateexp;
         while (true) {
             System.out.print("Enter date of expire(YYYY-MM-DD): ");
-            String dateexp = scanner.nextLine();
+            dateexp = scanner.nextLine();
             String[] myArray = dateexp.split("-");
             String[] myArray1 = datein.split("-");
 
@@ -156,13 +173,13 @@ public class TrayHolder {
 
             gap = (expY - inY) * 365 + (expM - inM) * 30 + expDay - inDay;
 
-            if (gap <= 14) {
+            if (gap <= 14 && gap > 0) {
                 break;
             }
 
-            System.out.println("Expired date it out of range, check it again please.");
+            System.out.println("Expiry must be within 14 days, check it and try again please.");
         }
-        return "";
+        return dateexp;
     }
 
     public static class Tray {
@@ -184,8 +201,8 @@ public class TrayHolder {
         private int top, size;
 
         public Stack() {
-            this.size = 10;
-            this.stack = new Tray[10];
+            this.size = 8;
+            this.stack = new Tray[8];
             this.top = -1;
         }
 
@@ -194,7 +211,7 @@ public class TrayHolder {
         }
 
         public boolean isFull() {
-            return top == size;
+            return top == size - 1;
         }
 
         public void push(Tray newTray) {
@@ -250,8 +267,8 @@ public class TrayHolder {
         private int front, rear, size;
 
         public Quee() {
-            this.size = 10;
-            this.quee = new Tray[10];
+            this.size = 8;
+            this.quee = new Tray[8];
             this.front = 0;
             this.rear = -1;
         }
@@ -278,7 +295,7 @@ public class TrayHolder {
             } else if (rear < size - 1) {
                 rear++;
                 for (int i = rear; i > 0; i--) {
-                    quee[rear + 1] = quee[rear];
+                    quee[i + 1] = quee[i];
                 }
 
                 quee[0] = newtray;
@@ -337,8 +354,31 @@ public class TrayHolder {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the size of the queue: ");
+//        System.out.print("Enter the size of the queue: ");
 //        int size = scanner.nextInt();
+        while (true) {
 
+            System.out.println("1: Stack structure.");
+            System.out.println("2: Queue structure.");
+            System.out.println("3: Exit from system");
+
+            System.out.print("Choose an operation (1-3): ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            switch (choice) {
+                case 1:
+                    stack();
+                    break;
+                case 2:
+                    queue();
+                    break;
+                case 3:
+                    System.out.println("Exiting the program...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        }
     }
 }
