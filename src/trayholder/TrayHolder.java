@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class TrayHolder {
-    static void queue(){
+
+    static void queue() {
         Scanner scanner = new Scanner(System.in);
         Quee q = new Quee();
 
@@ -61,9 +62,66 @@ public class TrayHolder {
         }
     }
 
-    static void stack(){
+    static void stack() {
+        Stack s = new Stack();
+
+        System.out.println("Hello World!");
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1: Push");
+            System.out.println("2:Pop");
+            System.out.println("3:Peak");
+            System.out.println("4:Display");
+            System.out.println("5:Exit");
+
+            System.out.println("Enter your choice");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter name of the item: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter weight of the item: ");
+                    int weight = Kbint();
+
+                    LocalDate myObj = LocalDate.now();
+                    String datein = myObj.getYear() + "-" + myObj.getMonthValue() + "-" + myObj.getDayOfMonth();
+                    System.out.println("Entered date: " + datein);
+
+                    String dateexp = DateExp(datein);
+                    Tray item = new Tray(name, weight, datein, dateexp);
+
+                    s.push(item);
+                    break;
+
+                case 2:
+                    s.pop();
+                    break;
+
+                case 3:
+                    s.peek();
+                    break;
+
+                case 4:
+                    s.display();
+                    break;
+                case 5:
+                    System.out.println("Exiting the program...");
+                    sc.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+
+        }
+    
+
         
-    }
+
+    
+
     static int Kbint() {
         Scanner scanner = new Scanner(System.in);
         int number = 0;
@@ -88,24 +146,25 @@ public class TrayHolder {
             String dateexp = scanner.nextLine();
             String[] myArray = dateexp.split("-");
             String[] myArray1 = datein.split("-");
-            
+
             int inDay = Integer.parseInt(myArray[2]);
             int expDay = Integer.parseInt(myArray1[2]);
             int inM = Integer.parseInt(myArray1[1]);
             int expM = Integer.parseInt(myArray[1]);
             int inY = Integer.parseInt(myArray1[0]);
-            int expY = Integer.parseInt(myArray[0]);            
-            
-            gap = (expY- inY)*365+(expM - inM)*30+expDay-inDay;
-            
-            if(gap <=14){
+            int expY = Integer.parseInt(myArray[0]);
+
+            gap = (expY - inY) * 365 + (expM - inM) * 30 + expDay - inDay;
+
+            if (gap <= 14) {
                 break;
             }
-            
+
             System.out.println("Expired date it out of range, check it again please.");
         }
         return "";
     }
+
     public static class Tray {
 
         private String Name, Date, DateExp;
@@ -118,41 +177,43 @@ public class TrayHolder {
             this.Weight = weight;
         }
     }
-    public static class Stack{
+
+    public static class Stack {
+
         private Tray[] stack;
         private int top, size;
-        
-        public Stack(){
+
+        public Stack() {
             this.size = 10;
             this.stack = new Tray[10];
             this.top = -1;
         }
-        
-        public boolean isEmpty(){
+
+        public boolean isEmpty() {
             return top == -1;
         }
-        
-        public boolean isFull(){
+
+        public boolean isFull() {
             return top == size;
         }
-        
-        public void enStack(Tray newTray){
+
+        public void push(Tray newTray) {
             if (isFull()) {
                 System.out.println("Tray holder is full!");
-            } else{
+            } else {
                 top++;
                 stack[top] = newTray;
             }
         }
-        
-        public void deStack(){
+
+        public void pop() {
             if (isEmpty()) {
                 System.out.println("Tray holder is empty!");
-            } else{
+            } else {
                 top--;
             }
         }
-        
+
         public void peek() {
             if (isEmpty()) {
                 System.out.println("Tray holder is empty!");
@@ -164,8 +225,25 @@ public class TrayHolder {
                 System.out.println("    Date of item expire: " + stack[top].DateExp + " ");
             }
         }
-        
+
+        public void display() {
+            if (isEmpty()) {
+                System.out.println("Queue is empty!");
+            } else {
+                for (int i = 0; i <= top; i++) {
+                    System.out.println("Tray " + i + ":");
+                    System.out.println("    Name of item: " + stack[i].Name + " ");
+                    System.out.println("    Weight of item: " + stack[i].Weight + "g ");
+                    System.out.println("    Date of instert into holder: " + stack[i].Date + " ");
+                    System.out.println("    Date of item expire: " + stack[i].DateExp + " ");
+
+                }
+                System.out.println();
+            }
+        }
+
     }
+
     public static class Quee {
 
         private Tray[] quee;
@@ -186,21 +264,6 @@ public class TrayHolder {
             return rear == size - 1;
         }
 
-//        public void enqueue(Tray newtray) {
-//            if (isFull()) {
-//                System.out.println("Tray holder is full!");
-//            } else {
-//                Tray tempHolder;
-//
-//                if (front == -1) {
-//                    front = 0;
-//                }
-//                rear++;
-//
-//                quee[rear] = newtray;
-//                System.out.println(newtray + " tray added.");
-//            }
-//        }
         public void enqueue(Tray newtray) {
             if (isFull()) {
                 System.out.println("Tray holder is full!");
@@ -208,8 +271,7 @@ public class TrayHolder {
                 quee[front] = newtray;
                 if (rear == size - 1) {
                     front--;
-                }
-                else{
+                } else {
                     rear++;
                 }
                 System.out.println("Tray added.");
@@ -218,26 +280,12 @@ public class TrayHolder {
                 for (int i = rear; i > 0; i--) {
                     quee[rear + 1] = quee[rear];
                 }
-                
+
                 quee[0] = newtray;
                 System.out.println("Tray added.");
             }
         }
 
-//        public void dequeue() {
-//            if (isEmpty()) {
-//                System.out.println("Queue is empty!");
-//            } else {
-//
-//                Tray item = quee[front];
-//                if (front == rear) {
-//                    front = rear = -1; // Reset queue after last item is dequeued
-//                } else {
-//                    front++;
-//                }
-//                System.out.println(item + " removed from the queue.");
-//            }
-//        }
         public void dequeue() {
             if (isEmpty()) {
                 System.out.println("Tray holder is empty!");
@@ -291,6 +339,6 @@ public class TrayHolder {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the size of the queue: ");
 //        int size = scanner.nextInt();
-        
+
     }
 }
