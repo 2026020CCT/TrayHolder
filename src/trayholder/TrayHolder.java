@@ -148,8 +148,6 @@ public class TrayHolder {
                 System.out.println("Error: " + e.getMessage());
             }
         }
-
-        sc.close();
         return number;
     }
 
@@ -248,7 +246,7 @@ public class TrayHolder {
 
         public void display() {
             if (isEmpty()) {
-                System.out.println("Queue is empty!");
+                System.out.println("Tray holder is empty!");
             } else {
                 for (int i = 0; i <= top; i++) {
                     System.out.println("Tray " + i + ":");
@@ -271,36 +269,34 @@ public class TrayHolder {
 
         public Quee() {
             this.size = 8;
-            this.quee = new Tray[8];
+            this.quee = new Tray[size];
             this.front = 0;
             this.rear = -1;
         }
 
         public boolean isEmpty() {
-            return front == -1;
+            return (rear < 0);
         }
 
         public boolean isFull() {
-            return rear == size - 1;
+            return (rear == size - 1);
         }
 
         public void enqueue(Tray newtray) {
             if (isFull()) {
                 System.out.println("Tray holder is full!");
-            } else if (isEmpty() || rear == size - 1) {
-                quee[front] = newtray;
-                if (rear == size - 1) {
-                    front--;
-                } else {
-                    rear++;
-                }
-                System.out.println("Tray added.");
-            } else if (rear < size - 1) {
+
+            } else if (isEmpty()) {
                 rear++;
-                for (int i = rear; i > 0; i--) {
+                quee[rear] = newtray;
+                System.out.println("Tray added.");
+
+            } else {
+
+                for (int i = rear; i >= 0; i--) {
                     quee[i + 1] = quee[i];
                 }
-
+                rear++;
                 quee[0] = newtray;
                 System.out.println("Tray added.");
             }
@@ -310,17 +306,14 @@ public class TrayHolder {
             if (isEmpty()) {
                 System.out.println("Tray holder is empty!");
             } else {
-                front++;
-                for (int i = rear; i > 1; i--) {
-                    quee[rear] = quee[rear - 1];
-                }
+                rear--;
                 System.out.println("Tray removed from the holder.");
             }
         }
 
         public void peek() {
             if (isEmpty()) {
-                System.out.println("Queue is empty!");
+                System.out.println("Tray holder is empty!");
             } else {
                 System.out.println("Tray " + rear + ":");
                 System.out.println("    Name of item: " + quee[rear].Name + " ");
@@ -332,7 +325,7 @@ public class TrayHolder {
 
         public void display() {
             if (isEmpty()) {
-                System.out.println("Queue is empty!");
+                System.out.println("Tray holder is empty!");
             } else {
                 for (int i = front; i <= rear; i++) {
                     System.out.println("Tray " + i + ":");
@@ -348,9 +341,9 @@ public class TrayHolder {
 
         public void size() {
             if (isEmpty()) {
-                System.out.println("Queue size: 0");
+                System.out.println("Tray holder size: 0");
             } else {
-                System.out.println("Queue size: " + (rear - front + 1));
+                System.out.println("Tray holder size: " + (rear+1));
             }
         }
     }
