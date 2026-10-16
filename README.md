@@ -93,7 +93,7 @@ Food-Tray-Storage-System/
 
 ## Author
 
-**Student:** [Your Name]  
+**Student:** [Sukhbat Enkhbaatar]  
 **Module:** Algorithms and Constructs  
 **Assessment:** CA-1  
 **Course:** Higher Diploma in Computing
